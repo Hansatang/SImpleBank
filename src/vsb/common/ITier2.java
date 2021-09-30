@@ -20,5 +20,5 @@ public interface ITier2 extends Remote {
 
     public Account createAccount(int accountNumber) throws RemoteException;
 
-    public void saveClient(ITier1 tier1Customer) throws RemoteException;
+    public void saveClient(String userTypedText, ITier1 tier1Customer) throws RemoteException;
 }

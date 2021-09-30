@@ -14,13 +14,13 @@ import static vsb.common.ITier25.T25_SERVICE_NAME;
 public class StartTier1Customer {
 
     public static void main(String[] args) throws RemoteException {
-        Tier1Customer tier1Customer = new Tier1Customer();
+        Scanner in = new Scanner(System.in);
+        System.out.println("Account number? or type exit to close");
+        String userTypedText = in.nextLine();
+        Tier1Customer tier1Customer = new Tier1Customer(userTypedText);
 
 
         while (true) {
-            Scanner in = new Scanner(System.in);
-            System.out.println("Account number? or type exit to close");
-            String userTypedText = in.nextLine();
             int accountNumber;
             if (userTypedText.equals("exit")) {
                 break;

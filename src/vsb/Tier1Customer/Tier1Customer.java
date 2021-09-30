@@ -25,7 +25,7 @@ public class Tier1Customer implements ITier1 {
     private ITier1 iTier1;
     private ITier2 iTier2;
 
-    public Tier1Customer() throws RemoteException {
+    public Tier1Customer(String userTypedText) throws RemoteException {
         this.iTier1 = (ITier1) UnicastRemoteObject.exportObject(this, 0);
         Scanner on = new Scanner(System.in);
         System.out.println("Where are you?");
@@ -33,7 +33,7 @@ public class Tier1Customer implements ITier1 {
         try {
             ITier25 tier25 = (ITier25) Naming.lookup(T25_SERVICE_NAME);
             this.iTier2 = tier25.getServer(location);
-            iTier2.saveClient(iTier1);
+            iTier2.saveClient(userTypedText,iTier1);
         } catch (MalformedURLException | NotBoundException e) {
             e.printStackTrace();
         }

@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static vsb.common.ITier3.T3_SERVICE_NAME;
@@ -22,7 +23,7 @@ import static vsb.common.ITier3.T3_SERVICE_NAME;
 public class Tier2BranchController extends UnicastRemoteObject implements ITier2 {
     private ITier3 tier3;
     private String location;
-    private List<ITier1> tier1CustomerList = new ArrayList<>();
+    private HashMap<String, List<ITier1>> users = new HashMap<String, List<ITier1>>();
 
 
     public Tier2BranchController(String location) throws RemoteException {
@@ -74,13 +75,34 @@ public class Tier2BranchController extends UnicastRemoteObject implements ITier2
     }
 
     @Override
-    public void saveClient(ITier1 tier1Customer) throws RemoteException {
+    public void saveClient(String userTypedText, ITier1 tier1Customer) throws RemoteException {
         System.out.println("WER");
-        tier1CustomerList.add(tier1Customer);
+        ArrayList<ITier1> tier1s = new ArrayList<>();
+        tier1s.add(tier1Customer);
+        if (users.containsKey(userTypedText)) {
+            if (users.get(userTypedText).contains(tier1Customer)) {
+
+            } else {
+                users.get(userTypedText).add(tier1Customer);
+            }
+        } else {
+            users.put(userTypedText, tier1s);
+        }
+        System.out.println(users.get(userTypedText).size());
     }
 
     private void send(Account account) {
-        for (ITier1 tier1 : tier1CustomerList
+
+        for (ITier1 tier1 : users.get(String.valueOf(account.getNumber()))
+        ) {
+            try {
+                System.out.println("Hej");
+                tier1.replyGet(account.toString());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        for (ITier1 tier1 : users.get("0000")
         ) {
             try {
                 System.out.println("Hej");

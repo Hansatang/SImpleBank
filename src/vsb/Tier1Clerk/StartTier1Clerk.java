@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class StartTier1Clerk {
     public static void main(String[] args) throws RemoteException {
-        Tier1Clerk tier1Clerk = new Tier1Clerk();
+        Tier1Clerk tier1Clerk = new Tier1Clerk("0000");
 
         while (true) {
             Scanner in = new Scanner(System.in);
